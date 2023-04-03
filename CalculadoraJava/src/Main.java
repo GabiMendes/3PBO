@@ -1,12 +1,14 @@
 import br.edu.faeterj.Calculadora;
 import java.util.Scanner;
 public class Main {
-    public static void main(String[] args)    {
+    public static void main(String[] args)    
+    {
+        
         Calculadora calculadora = new Calculadora();
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Calculadora Jarvis, a calculadora feita em Java :) \n Regras de Uso: \n Insira primeiro valor, aperte Enter. \n Insira o operador, aperte Enter. \n Finalmente, insira o segundo valor e aperte Enter para ver o resultado.");
-//        System.out.println("Valor 1:  ");
+
         int valor1 = 0;
         int valor2 = 0;
         valor1 = sc.nextInt();
@@ -21,7 +23,9 @@ public class Main {
                 int resultadoSoma = Calculadora.Soma(valor1, valor2);
 
                 System.out.println("Resultado:  " + resultadoSoma);
-                sc.close();
+                
+                break;
+               
 
             case '-':
                 valor2 = sc.nextInt();
@@ -29,7 +33,9 @@ public class Main {
                 int resultadoSub = Calculadora.Sub(valor1, valor2);
 
                 System.out.println("Resultado:  " + resultadoSub);
-                sc.close();
+                
+                break;
+ 
 
             case '/':
                 valor2 = sc.nextInt();
@@ -37,7 +43,9 @@ public class Main {
                 int resultadoDivi = Calculadora.Divi(valor1, valor2);
 
                 System.out.println("Resultado:  " + resultadoDivi);
-                sc.close();
+                
+                break;
+
 
             case '*':
                 valor2 = sc.nextInt();
@@ -45,7 +53,9 @@ public class Main {
                 int resultadoMult = Calculadora.Mult(valor1, valor2);
 
                 System.out.println("Resultado:  " + resultadoMult);
-                sc.close();
+                
+                break;
+
 
             case 'p':
                 valor2 = sc.nextInt();
@@ -53,14 +63,19 @@ public class Main {
                 int resultadoPot = Calculadora.Pot(valor1, valor2);
 
                 System.out.println("Resultado:  " + resultadoPot);
-                sc.close();
+                
+                break;
+
 
             case 'c':
                 valor2 = sc.nextInt();
 
                 System.out.println("" + valor1 + "" + valor2);
+                
+                break;
 
         }
 
     }
+     sc.close();
 }

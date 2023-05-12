@@ -1,34 +1,73 @@
 package br.edu.faeterj;
-import java.util.Scanner;
+
 
 public class Produto {
+    private int id;
+    private String nome;
+    private double valor;
+    private long codBarra;
+//    private int idCategoria;
+    private String descricao;
+    private int qtd;
 
-    public String nome;
-    public Double valor;
-    public int qtd;
-    public int codBarra;
-    public String descricao;
+    public int getId() {
+        return id;
+    }
 
-    public void registrarProduto() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Digite o nome do produto:  ");
-        nome = sc.next();
-        System.out.println("Digite o valor do produto:  ");
-        valor = sc.nextDouble();
-        System.out.println("Digite a quantidade do produto:  ");
-        qtd = sc.nextInt();
-        System.out.println("Digite o código de barras do produto:  ");
-        codBarra = sc.nextInt();
-        sc.nextLine(); // consumir o restante da linha do código de barras,
-        System.out.println("Digite a descrição do produto:  ");
-        descricao = sc.nextLine();
+    public void setId(int id) {
+        this.id = id;
+    }
 
-        System.out.println("Nome Produto:" + nome);
-        System.out.println("Valor Produto:" + valor);
-        System.out.println("Quantidade Produto:" + qtd);
-        System.out.println("Descrição Produto:" + descricao);
-        System.out.println("CodBarra Produto:" + codBarra);
+    public String getNome() {
+        return nome;
+    }
 
-        sc.close();
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public double getValor() {
+        return valor;
+    }
+
+    public void setValor(double valor) {
+        this.valor = valor;
+    }
+
+    public long getCodBarra() {
+        return codBarra;
+    }
+
+    public void setCodBarra(long codBarra) {
+        this.codBarra = codBarra;
+    }
+
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public int getQtd() {
+        return qtd;
+    }
+
+    public void setQtd(int qtd) {
+        this.qtd = qtd;
+    }
+
+    public String detProduto()
+    {
+        return "Nome produto: " + nome + " Código de Barras: " + codBarra + " Valor: " + valor + " Descricao: " + descricao + " Quantidade: " + qtd;
+    }
+
+    public Produto(int id, String nome, int valor, long codBarra, String descricao, int qtd) {
+        this.nome = nome;
+        this.valor = valor;
+        this.codBarra = codBarra;
+        this.descricao = descricao;
+        this.qtd = qtd;
     }
 }

@@ -1,6 +1,8 @@
 package br.edu.faeterj;
 
 
+import java.util.ArrayList;
+
 public class Produto {
     private int id;
     private String sku;
@@ -115,19 +117,10 @@ public class Produto {
         this.setQtd(qtd);
     }
 
-    public void delProduto (int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, String categoria, String fabricante, int qtd)
-    {
-        this.id = Integer.parseInt(null);
-        this.sku = null;
-        this.nome = null;
-        this.valor = Double.parseDouble(null);
-        this.peso = Double.parseDouble(null);
-        this.codBarra = Long.parseLong(null);
-        this.descricao = null;
-        this.categoria = null;
-        this.fabricante = null;
-        this.qtd = Integer.parseInt(null);
+    public void delProduto(ArrayList<Produto> listaProdutos) {
+        listaProdutos.remove(this);
     }
+
 
     public Produto(int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, String categoria, String fabricante, int qtd) {
         this.id = id;

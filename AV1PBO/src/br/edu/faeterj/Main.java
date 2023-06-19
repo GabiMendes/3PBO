@@ -166,26 +166,30 @@ public class Main {
                     break;
 
                 case 5:
-                    System.out.println("Deletar 1 produto:  ");
-                    System.out.println("Digite a id (chave única) do produto:  ");
+                    System.out.println("Deletar 1 produto:");
+                    System.out.println("Digite a id (chave única) do produto:");
 
                     idBuscar = sc.nextInt();
+                    produtoEncontrado = false;
 
                     for (Produto prodArmazenado : lProd) {
                         if (prodArmazenado.getId() == idBuscar) {
                             produtoEncontrado = true;
 
-                            System.out.println("Dados deletados:  ");
+                            System.out.println("Dados deletados:");
                             System.out.println(prodArmazenado.detProduto());
 
-                            prodArmazenado.delProduto(id, sku, nome, valor, peso, codBarra, descricao, categoria, fabricante, qtd);
+                            prodArmazenado.delProduto(lProd);
 
                             break;
-                        } else {
-                            System.out.println("Nenhum produto encontrado com o ID informado.");
                         }
                     }
+
+                    if (!produtoEncontrado) {
+                        System.out.println("Nenhum produto encontrado com o ID informado.");
+                    }
                     break;
+
 
 
                 default:

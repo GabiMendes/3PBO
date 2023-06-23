@@ -1,22 +1,29 @@
 package br.edu.faeterj;
 
-
-import java.util.ArrayList;
-
 public class Produto {
     private int id;
     private String sku;
     private String nome;
-    private double valor;
-    private double peso;
+    private int valor;
+    private int peso;
     private long codBarra;
     private String descricao;
-    private String categoria;
+    private Categoria categoria;
     private String fabricante;
     private int qtd;
 
-    //pra alterar é Getters e Setters. Pra selecionar getall?
-
+    public Produto(int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, Categoria categoria, String fabricante, int qtd) {
+        this.id = id;
+        this.sku = sku;
+        this.nome = nome;
+        this.valor = valor;
+        this.peso = peso;
+        this.codBarra = codBarra;
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.fabricante = fabricante;
+        this.qtd = qtd;
+    }
 
     public int getId() {
         return id;
@@ -42,19 +49,19 @@ public class Produto {
         this.nome = nome;
     }
 
-    public double getValor() {
+    public int getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(int valor) {
         this.valor = valor;
     }
 
-    public double getPeso() {
+    public int getPeso() {
         return peso;
     }
 
-    public void setPeso(double peso) {
+    public void setPeso(int peso) {
         this.peso = peso;
     }
 
@@ -74,16 +81,16 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 
-    public void setCategoria(String categoria) {
+    public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
     }
 
     public String getFabricante() {
-        return categoria;
+        return fabricante;
     }
 
     public void setFabricante(String fabricante) {
@@ -98,40 +105,16 @@ public class Produto {
         this.qtd = qtd;
     }
 
-    public String detProduto()
-    {
-        return "Id: " + id + " Sku: " + sku + " Nome: " + nome + " Código de Barras: " + codBarra + " Valor: " + valor + " Peso: " + peso + " Descricao: " + descricao + " Quantidade: " + qtd + " Categoria: " + categoria + " Fabricante: " + fabricante;
-    }
-
-    public void altProduto (int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, String categoria, String fabricante, int qtd)
-    {
-        this.setId(id);
-        this.setSku(sku);
-        this.setNome(nome);
-        this.setValor(valor);
-        this.setPeso(peso);
-        this.setCodBarra(codBarra);
-        this.setDescricao(descricao);
-        this.setCategoria(categoria);
-        this.setFabricante(fabricante);
-        this.setQtd(qtd);
-    }
-
-    public void delProduto(ArrayList<Produto> listaProdutos) {
-        listaProdutos.remove(this);
-    }
-
-
-    public Produto(int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, String categoria, String fabricante, int qtd) {
-        this.id = id;
-        this.sku = sku;
-        this.nome = nome;
-        this.valor = valor;
-        this.peso = peso;
-        this.codBarra = codBarra;
-        this.descricao = descricao;
-        this.categoria = categoria;
-        this.fabricante = fabricante;
-        this.qtd = qtd;
+    public String detProduto() {
+        return "ID: " + id +
+                ", SKU: " + sku +
+                ", Nome: " + nome +
+                ", Valor: " + valor +
+                ", Peso: " + peso +
+                ", Código de Barras: " + codBarra +
+                ", Descrição: " + descricao +
+                ", Categoria: " + categoria.getCategoria() +
+                ", Fabricante: " + fabricante +
+                ", Quantidade: " + qtd;
     }
 }

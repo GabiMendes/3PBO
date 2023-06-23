@@ -1,5 +1,4 @@
 package br.edu.faeterj;
-
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -32,6 +31,7 @@ public class Main {
             System.out.println("4 - Alterar um produto");
             System.out.println("5 - Deletar um produto");
             System.out.println("6 - Exibir itens de uma categoria");
+            System.out.println("7 - Exibir itens de um fabricante");
 
             opcao = sc.nextInt();
 
@@ -75,7 +75,8 @@ public class Main {
                         id = id + 1;
 
                         Categoria novaCategoria = new Categoria(id, categoria);
-                        Produto prod = new Produto(id, sku, nome, valor, peso, codBarra, descricao, novaCategoria, fabricante, qtd);
+                        Fabricante novoFabricante = new Fabricante(id, fabricante, "");
+                        Produto prod = new Produto(id, sku, nome, valor, peso, codBarra, descricao, novaCategoria, novoFabricante, qtd);
                         lProd.add(prod);
 
                         System.out.println("Quer cadastrar novo produto? S para Sim, N para Não.");
@@ -113,8 +114,8 @@ public class Main {
                     break;
 
                 case 4:
-                    System.out.println("Alterar 1 produto: ");
-                    System.out.println("Digite a id (chave única) do produto que deseja alterar: ");
+                    System.out.println("Alterar 1 produto:  ");
+                    System.out.println("Digite a id (chave única) do produto:  ");
 
                     idBuscar = sc.nextInt();
 
@@ -122,14 +123,12 @@ public class Main {
 
                     for (Produto prodArmazenado : lProd) {
                         if (prodArmazenado.getId() == idBuscar) {
-                            sc.nextLine();
-
                             System.out.println("Sku do produto:  ");
-                            sku = sc.nextLine();
+                            sku = sc.next();
                             prodArmazenado.setSku(sku);
 
                             System.out.println("Nome do produto:  ");
-                            nome = sc.nextLine();
+                            nome = sc.next();
                             prodArmazenado.setNome(nome);
 
                             System.out.println("Valor do produto:  ");
@@ -151,18 +150,17 @@ public class Main {
                             prodArmazenado.setDescricao(descricao);
 
                             System.out.println("Categoria do produto:  ");
-                            categoria = sc.nextLine();
+                            categoria = sc.next();
                             prodArmazenado.getCategoria().setCategoria(categoria);
 
                             System.out.println("Fabricante do produto:  ");
-                            fabricante = sc.nextLine();
-                            prodArmazenado.setFabricante(fabricante);
+                            fabricante = sc.next();
+                            prodArmazenado.getFabricante().setNome(fabricante);
 
                             System.out.println("Quantidade do produto:  ");
                             qtd = sc.nextInt();
                             prodArmazenado.setQtd(qtd);
 
-                            System.out.println("Produto alterado com sucesso!");
                             produtoAlterado = true;
                             break;
                         }
@@ -170,64 +168,84 @@ public class Main {
 
                     if (!produtoAlterado) {
                         System.out.println("Nenhum produto encontrado com o ID informado.");
+                    } else {
+                        System.out.println("Produto alterado com sucesso.");
                     }
                     break;
 
                 case 5:
-                    System.out.println("Deletar 1 produto: ");
-                    System.out.println("Digite a id (chave única) do produto que deseja deletar: ");
+                    System.out.println("Deletar 1 produto:  ");
+                    System.out.println("Digite a id (chave única) do produto:  ");
 
                     idBuscar = sc.nextInt();
 
-                    boolean produtoDeletado = false;
+                    boolean produtoRemovido = false;
 
-                    for (int i = 0; i < lProd.size(); i++) {
-                        Produto prodArmazenado = lProd.get(i);
+                    for (Produto prodArmazenado : lProd) {
                         if (prodArmazenado.getId() == idBuscar) {
-                            lProd.remove(i);
-                            System.out.println("Produto deletado com sucesso!");
-                            produtoDeletado = true;
+                            lProd.remove(prodArmazenado);
+                            produtoRemovido = true;
                             break;
                         }
                     }
 
-                    if (!produtoDeletado) {
+                    if (!produtoRemovido) {
                         System.out.println("Nenhum produto encontrado com o ID informado.");
+                    } else {
+                        System.out.println("Produto removido com sucesso.");
                     }
                     break;
 
                 case 6:
-                    System.out.println("Listar todos os produtos de uma categoria:");
-                    System.out.println("Digite o nome da categoria: ");
-                    sc.nextLine(); // Consumir a nova linha pendente
+                    System.out.println("Exibir itens de uma categoria:  ");
+                    System.out.println("Digite o nome da categoria:  ");
 
-                    String nomeCategoria = sc.nextLine(); // Ler o nome da categoria
+                    categoria = sc.next();
 
                     boolean categoriaEncontrada = false;
 
                     for (Produto prodArmazenado : lProd) {
-                        if (prodArmazenado.getCategoria().getCategoria().equalsIgnoreCase(nomeCategoria)) {
+                        if (prodArmazenado.getCategoria().getCategoria().equalsIgnoreCase(categoria)) {
                             System.out.println(prodArmazenado.detProduto());
                             categoriaEncontrada = true;
                         }
                     }
 
                     if (!categoriaEncontrada) {
-                        System.out.println("Nenhum produto encontrado na categoria informada.");
+                        System.out.println("Nenhum produto encontrado para a categoria informada.");
                     }
                     break;
 
+                case 7:
+                    System.out.println("Exibir itens de um fabricante:");
+                    System.out.println("Digite o nome do fabricante: ");
+                    fabricante = sc.next();
+
+                    boolean fabricanteEncontrado = false;
+
+                    for (Produto prodArmazenado : lProd) {
+                        if (prodArmazenado.getFabricante().getNome().equalsIgnoreCase(fabricante)) {
+                            System.out.println(prodArmazenado.detProduto());
+                            fabricanteEncontrado = true;
+                        }
+                    }
+
+                    if (!fabricanteEncontrado) {
+                        System.out.println("Nenhum produto encontrado para o fabricante informado.");
+                    }
+                    break;
+
+
                 default:
-                    System.out.println("Opção inválida. Por favor, selecione uma opção válida.");
+                    System.out.println("Opção inválida.");
                     break;
             }
 
-            System.out.println("Deseja realizar outra operação? S para Sim, N para Não.");
+            System.out.println("Deseja continuar? S para Sim, N para Não.");
             respostaSwitch = sc.next();
-
         } while (!respostaSwitch.equalsIgnoreCase("N"));
 
-        System.out.println("Programa finalizado.");
+        System.out.println("Sistema encerrado.");
         sc.close();
     }
 }

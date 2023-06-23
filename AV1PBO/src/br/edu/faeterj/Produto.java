@@ -9,10 +9,10 @@ public class Produto {
     private long codBarra;
     private String descricao;
     private Categoria categoria;
-    private String fabricante;
+    private Fabricante fabricante;
     private int qtd;
 
-    public Produto(int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, Categoria categoria, String fabricante, int qtd) {
+    public Produto(int id, String sku, String nome, int valor, int peso, long codBarra, String descricao, Categoria categoria, Fabricante fabricante, int qtd) {
         this.id = id;
         this.sku = sku;
         this.nome = nome;
@@ -89,11 +89,11 @@ public class Produto {
         this.categoria = categoria;
     }
 
-    public String getFabricante() {
+    public Fabricante getFabricante() {
         return fabricante;
     }
 
-    public void setFabricante(String fabricante) {
+    public void setFabricante(Fabricante fabricante) {
         this.fabricante = fabricante;
     }
 
@@ -106,15 +106,23 @@ public class Produto {
     }
 
     public String detProduto() {
-        return "ID: " + id +
+        String result = "ID: " + id +
                 ", SKU: " + sku +
                 ", Nome: " + nome +
                 ", Valor: " + valor +
                 ", Peso: " + peso +
                 ", Código de Barras: " + codBarra +
                 ", Descrição: " + descricao +
-                ", Categoria: " + categoria.getCategoria() +
-                ", Fabricante: " + fabricante +
-                ", Quantidade: " + qtd;
+                ", Categoria: " + categoria.getCategoria();
+
+        if (fabricante != null) {
+            result += ", Fabricante: " + fabricante.getNome();
+        } else {
+            result += ", Fabricante: N/A";
+        }
+
+        result += ", Quantidade: " + qtd;
+
+        return result;
     }
 }

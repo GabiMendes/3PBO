@@ -3,12 +3,12 @@ package br.edu.faeterj;
 public class Quarto {
 
     private int id;
-    public String nomeQuarto;
-    public int qtdeCamas;
-    public boolean temBanheiro;
-    public String descricao;
+    private String nomeQuarto;
+    private int qtdeCamas;
+    private boolean temBanheiro;
+    private String descricao;
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 

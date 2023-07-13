@@ -3,11 +3,11 @@ package br.edu.faeterj;
 public class Reserva {
 
     private int id;
-    public int idQuarto;
-    public int idCama;
-    public int idCliente;
-    public String dataEntrada;
-    public String dataSaida;
+    private Quarto quarto;
+    private Cama cama;
+    private Cliente cliente;
+    private String dataEntrada;
+    private String dataSaida;
 
     public int getId() {
         return id;
@@ -15,23 +15,23 @@ public class Reserva {
     public void setId(int id) {
         this.id = id;
     }
-    public int getIdQuarto() {
-        return idQuarto;
+    public Quarto getQuarto() {
+        return quarto;
     }
-    public void setIdQuarto(int idQuarto) {
-        this.idQuarto = idQuarto;
+    public void setQuarto(Quarto quarto) {
+        this.quarto = quarto;
     }
-    public int getIdCama() {
-        return idCama;
+    public Cama getCama() {
+        return cama;
     }
-    public void setIdCama(int idCama) {
-        this.idCama = idCama;
+    public void setCama(Cama cama) {
+        this.cama = cama;
     }
-    public int getIdCliente() {
-        return idCliente;
+    public Cliente getCliente() {
+        return cliente;
     }
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
     public String getDataEntrada() {
         return dataEntrada;
@@ -46,27 +46,26 @@ public class Reserva {
         this.dataSaida = dataSaida;
     }
 
-    public Reserva(int id, int idQua) {
-
-    }
-
-    public Reserva(int id, int idQuarto, int idCama, int idCliente, String dataEntrada, String dataSaida)
-    {
+    public Reserva(int id, Quarto quarto, Cama cama, Cliente cliente, String dataEntrada, String dataSaida) {
         this.id = id;
-        this.idQuarto = idQuarto;
-        this.idCama = idCama;
-        this.idCliente = idCliente;
+        this.quarto = quarto;
+        this.cama = cama;
+        this.cliente = cliente;
         this.dataEntrada = dataEntrada;
         this.dataSaida = dataSaida;
+        cliente.addReserva(this);
     }
 
-    //Trabalhar nos detalhes abaixo
     public String detReserva() {
         String result = "ID: " + id +
-                ", ID do Quarto: " + Quarto.getId() +
-                ", ID da Cama: " + Cama.getId() +
-                ", ID do Cliente: " + Cliente.getId() +
+                ", ID do Quarto: " + quarto.getId() +
+                ", ID da Cama: " + cama.getId() +
+                ", ID do Cliente: " + cliente.getId() +
+                ", Necessita de Banheiro? " + quarto.isTemBanheiro() +
+                ", Quantas camas?  " + quarto.getQtdeCamas() +
+                ", Necessita de Beliche?  " + cama.isEhBeliche() +
                 ", Data de Entrada: " + dataEntrada +
                 ", Data de Saída: " + dataSaida;
+        return result;
     }
 }

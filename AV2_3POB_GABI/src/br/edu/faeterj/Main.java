@@ -3,9 +3,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
-    public Main() {
-    }
-
     public static void main(String[] args){
 
         ArrayList<Reserva> lReserva = new ArrayList<Reserva>();
@@ -43,7 +40,6 @@ public class Main {
         int idBuscar=-1;
         boolean reservaEncontrada=false;
 
-        //Precisa-se de CRUDs de administradores para CLIENTE, QUARTO E CAMA. Antes do SWITCH principal, perguntar se é administrador para poder realizar tais ações.
         do {
             System.out.println("Selecione uma opção:");
             System.out.println("1 - Incluir reserva");
@@ -95,27 +91,29 @@ public class Main {
 
                         idCliente=idCliente+1;
 
-                        //Para dados booleanos, criar lógica condicional. Se cliente digitar "Sim" == TRUE, se não, FALSE.
                         System.out.println("Dados de cliente computados. Agora vamos escolher o quarto. Precisa de banheiro?");
-                        temBanheiro = sc.hasNextBoolean();
+                        String respostaBanheiro = sc.next();
+                        temBanheiro = respostaBanheiro.equalsIgnoreCase("S") || respostaBanheiro.equalsIgnoreCase("Sim");
+
+                        System.out.println("Precisa de beliche?");
+                        String respostaBeliche = sc.next();
+                        ehBeliche = respostaBeliche.equalsIgnoreCase("S") || respostaBeliche.equalsIgnoreCase("Sim");
+
 
                         System.out.println("Quantidade de camas necessárias?");
                         qtdeCamas = sc.nextInt();
 
-                        //Para dados booleanos, criar lógica condicional. Se cliente digitar "Sim" == TRUE, se não, FALSE.
-                        System.out.println("Precisa de beliche?");
-                        ehBeliche = sc.hasNextBoolean();
-
                         idQuarto = idQuarto+1;
                         idCama = idCama+1;
 
+                        nomeQuarto = "Quarto " + idQuarto;
+                        codigoCama = "Cama " + idCama;
+
                         Cliente novoCliente = new Cliente(idCliente, nome, endereco, postalCode, pais, cpf, passaporte, email, dataNascimento);
                         Quarto novoQuarto = new Quarto(idQuarto, nomeQuarto, qtdeCamas, temBanheiro, "");
-                        Cama novaCama = new Cama(idCama, "", ehBeliche, "", "");
-                        Reserva novaReserva = new Reserva(idReserva, idQuarto, idCama, idCliente, dataEntrada, dataSaida);
-                       
-                        //Transformar em arquivo dados armazenados abaixo.
-                        //Quartos e camas já precisam existir, alterar lógica do código e interação entre as classes.
+                        Cama novaCama = new Cama(idCama, codigoCama, ehBeliche, posicaoCama, descricaoCama);
+                        Reserva novaReserva = new Reserva(idReserva, novoQuarto, novaCama, novoCliente, dataEntrada, dataSaida);
+
                         lReserva.add(novaReserva);
                         lCliente.add(novoCliente);
                         lQuarto.add(novoQuarto);
@@ -131,8 +129,6 @@ public class Main {
                     System.out.println("Listar reservas: ");
 
                     for (Reserva reserva : lReserva) {
-                        //Criar classe "detReserva", que trará os detalhes de todas as reservas ocupadas para administrador da página.
-                        //Se o cliente quiser conferir dados de sua reserva, case abaixo
                         System.out.println(reserva.detReserva());
                     }
 
@@ -145,14 +141,14 @@ public class Main {
 
                     idBuscar = sc.nextInt();
 
-                    boolean cpfEncontrado = false;
+                    reservaEncontrada = false;
 
                     for (Cliente clienteBuscado : lCliente) {
                         if (clienteBuscado.getCpf() == idBuscar) {
-                            //Estabelecer dentro das classes cliente x reserva a relação entre as duas através do CPF.
-                            System.out.println(reserva.detReserva());
+                            for (Reserva reserva : clienteBuscado.getReservas()) {
+                                System.out.println(reserva.detReserva());
+                            }
                             reservaEncontrada = true;
-                            //Cliente pode ter outras reservas, alterar lógica.
                             break;
                         }
                     }
@@ -162,14 +158,109 @@ public class Main {
                     }
                     break;
 
-                    break;
-
                 case 4:
-                    //Alterar reserva
+                    System.out.println("Alterar uma reserva");
+                    System.out.println("Digite o CPF do usuário: ");
+                    cpf = sc.nextInt();
+
+                    reservaEncontrada = false;
+
+                    for (Reserva reserva : lReserva) {
+                        if (reserva.getCliente().getCpf() == cpf) {
+                            System.out.println("Detalhes da reserva antiga:");
+                            System.out.println(reserva.detReserva());
+
+                            System.out.println("Qual campo deseja alterar?");
+                            System.out.println("1 - Data de Entrada");
+                            System.out.println("2 - Data de Saída");
+                            System.out.println("3 - ID do Quarto");
+                            System.out.println("4 - ID da Cama");
+                            System.out.println("5 - Precisa de banheiro");
+                            System.out.println("6 - Precisa de beliche");
+
+                            int campo = sc.nextInt();
+
+                            switch (campo) {
+                                case 1:
+                                    System.out.println("Digite a nova data de entrada: ");
+                                    sc.nextLine();
+                                    String novaDataEntrada = sc.nextLine();
+                                    reserva.setDataEntrada(novaDataEntrada);
+                                    break;
+
+                                case 2:
+                                    System.out.println("Digite a nova data de saída: ");
+                                    sc.nextLine();
+                                    String novaDataSaida = sc.nextLine();
+                                    reserva.setDataSaida(novaDataSaida);
+                                    break;
+
+                                case 3:
+                                    System.out.println("Digite o novo ID do quarto: ");
+                                    int novoIdQuarto = sc.nextInt();
+                                    Quarto novoQuarto = new Quarto(novoIdQuarto, "", 0, false, "");
+                                    reserva.setQuarto(novoQuarto);
+                                    break;
+
+                                case 4:
+                                    System.out.println("Digite o novo ID da cama: ");
+                                    int novoIdCama = sc.nextInt();
+                                    Cama novaCama = new Cama(novoIdCama, "", false, "", "");
+                                    reserva.setCama(novaCama);
+                                    break;
+
+                                case 5:
+                                    System.out.println("Precisa de banheiro? (S/N): ");
+                                    String respostaBanheiro = sc.next();
+                                    temBanheiro = respostaBanheiro.equalsIgnoreCase("S") || respostaBanheiro.equalsIgnoreCase("Sim");
+                                    reserva.getQuarto().setTemBanheiro(temBanheiro);
+                                    break;
+
+                                case 6:
+                                    System.out.println("Precisa de beliche? (S/N): ");
+                                    String respostaBeliche = sc.next();
+                                    ehBeliche = respostaBeliche.equalsIgnoreCase("S") || respostaBeliche.equalsIgnoreCase("Sim");
+                                    reserva.getCama().setEhBeliche(ehBeliche);
+                                    break;
+
+                                default:
+                                    System.out.println("Opção inválida.");
+                                    break;
+                            }
+
+                            System.out.println("Reserva alterada com sucesso.");
+                            reservaEncontrada = true;
+                            break;
+                        }
+                    }
+
+                    if (!reservaEncontrada) {
+                        System.out.println("Nenhuma reserva encontrada no CPF informado.");
+                    }
                     break;
 
                 case 5:
-                    //Excluir reserva
+                    System.out.println("Excluir uma reserva");
+                    System.out.println("Digite o CPF do cliente: ");
+                    cpf = sc.nextInt();
+
+                    reservaEncontrada = false;
+                    Reserva reservaExcluir = null;
+
+                    for (Reserva reserva : lReserva) {
+                        if (reserva.getCliente().getCpf() == cpf) {
+                            reservaExcluir = reserva;
+                            reservaEncontrada = true;
+                            break;
+                        }
+                    }
+
+                    if (reservaEncontrada) {
+                        lReserva.remove(reservaExcluir);
+                        System.out.println("Reserva excluída com sucesso.");
+                    } else {
+                        System.out.println("Nenhuma reserva encontrada no CPF informado.");
+                    }
                     break;
 
                 default:
@@ -184,4 +275,4 @@ public class Main {
         System.out.println("Sistema encerrado.");
         sc.close();
     }
-    }
+}

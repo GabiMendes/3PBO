@@ -1,16 +1,18 @@
 package br.edu.faeterj;
+import java.util.ArrayList;
 
 public class Cliente {
 
-    private static int id;
+    private int id;
     private String nome;
     private String endereco;
     private String postalCode;
-    public String pais;
+    private String pais;
     private int cpf;
     private int passaporte;
-    public String email;
-    public String dataNascimento;
+    private String email;
+    private String dataNascimento;
+    private ArrayList<Reserva> reservas;
 
     public int getId() {
         return id;
@@ -66,6 +68,12 @@ public class Cliente {
     public void setDataNascimento(String dataNascimento) {
         this.dataNascimento = dataNascimento;
     }
+    public ArrayList<Reserva> getReservas() {
+        return reservas;
+    }
+    public void setReservas(ArrayList<Reserva> reservas) {
+        this.reservas = reservas;
+    }
 
     public Cliente(int id, String nome, String endereco, String postalCode, String pais, int cpf, int passaporte, String email, String dataNascimento) {
         this.id = id;
@@ -77,5 +85,10 @@ public class Cliente {
         this.passaporte = passaporte;
         this.email = email;
         this.dataNascimento = dataNascimento;
+        this.reservas = new ArrayList<Reserva>();
+    }
+
+    public void addReserva(Reserva reserva) {
+        this.reservas.add(reserva);
     }
 }

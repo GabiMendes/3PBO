@@ -4,11 +4,11 @@ public class Cama {
 
     private int id;
     private String codigoCama;
-    public boolean ehBeliche;
-    public String posicao;
-    public String descricao;
+    private boolean ehBeliche;
+    private String posicao;
+    private String descricao;
 
-    public static int getId() {
+    public int getId() {
         return id;
     }
 
